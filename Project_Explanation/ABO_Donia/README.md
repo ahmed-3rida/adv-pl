@@ -1,10 +1,9 @@
 # Project Explanation - Core Architecture, Storage & Utilities
 
 ## 📌 Assigned Files to Study
-1. `App.java` (Main Application Entry Point)
-2. `storage/FileManager.java` (Data Persistence Layer)
-3. `ui/UITheme.java` (Core UI Styles & Components)
-4. `service/ValidationUtils.java` (Input Validation)
+1. `storage/FileManager.java` (Data Persistence Layer)
+2. `ui/UITheme.java` (Core UI Styles & Components)
+3. `service/ValidationUtils.java` (Input Validation)
 
 ## 📌 What is this part of the system?
 This module is the backbone of the entire application. It handles the starting point of the application, styling logic for all Graphical User Interfaces (GUI), how data is saved and loaded, and global validation logic.
@@ -29,7 +28,6 @@ A: It prevents code duplication. Instead of every developer writing button color
 ## 📝 ملخص بالعربي (Arabic Summary)
 **الجزء الخاص بـ ABO Donia:**
 أنت مسؤول عن "أساسيات النظام وتخزين البيانات". 
-- فايل `App.java`: ده نقطة البداية للمشروع كله اللي بيقوم شاشة البرنامج.
 - فايل `FileManager.java`: ده من أهم الفايلات في المشروع، وظيفته ياخد أي بيانات (طلاب، كورسات، درجات) ويسجلها في فايلات عشان لما نقفل البرنامج ونفتحه نلاقي الداتا موجودة وماتتمسحش.
 - فايل `UITheme.java`: ده الفايل اللي فيه ألوان وتصميم الزراير والخلفيات، وظيفته إن شكل البرنامج كله يبقى موحد واحترافي وأي حد بيعمل شاشة جديدة بياخد التصميم منه.
 - فايل `ValidationUtils.java`: ده الفايل اللي بيتأكد إن البيانات اللي اليوزر بيدخلها صحيحة، زي إن الإيميل مكتوب صح أو الباسورد مش أقل من عدد معين.

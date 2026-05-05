@@ -1,10 +1,11 @@
 # Project Explanation - Basic Course Structure & Parent Courses
 
 ## 📌 Assigned Files to Study
-1. `models/ParentCourse.java` (Blueprint for courses)
-2. `models/Course.java` (Actual instantiated course instances)
-3. `ui/ManageParentCoursesFrame.java` (UI for creating course blueprints)
-4. `service/CourseService.java` (Business logic for courses)
+1. `App.java` (Main Application Entry Point)
+2. `models/ParentCourse.java` (Blueprint for courses)
+3. `models/Course.java` (Actual instantiated course instances)
+4. `ui/ManageParentCoursesFrame.java` (UI for creating course blueprints)
+5. `service/CourseService.java` (Business logic for courses)
 
 ## 📌 What is this part of the system?
 This module is responsible for defining the educational content of the system. It establishes the concept of a "Parent Course" (like a general syllabus) and "Courses" (specific instances of that syllabus running in a specific semester with a specific instructor).
@@ -28,7 +29,8 @@ A: It calls `FileManager` methods to load JSON/CSV files and then processes that
 ---
 ## 📝 ملخص بالعربي (Arabic Summary)
 **الجزء الخاص بـ Ahmed Salman:**
-أنت مسؤول عن "هيكلة الكورسات والمواد الدراسية".
+أنت مسؤول عن "تشغيل النظام وهيكلة الكورسات والمواد الدراسية".
+- فايل `App.java`: ده نقطة البداية للمشروع كله اللي بيقوم شاشة البرنامج.
 - فايل `ParentCourse.java`: ده بيمثل المادة الأساسية كفكرة (زي مادة برمجة ١، ٣ ساعات معتمدة). 
 - فايل `Course.java`: ده بيمثل الكورس الفعلي اللي بيُدرس حاليا للطلاب (يعني مادة برمجة ١، مجموعة أ، اللي بيديها دكتور فلان يوم الأحد).
 - فايل `ManageParentCoursesFrame.java`: الشاشة اللي الأدمن بيضيف منها المواد الأساسية للكلية أو المعهد.

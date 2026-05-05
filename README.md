@@ -50,9 +50,9 @@ A comprehensive desktop application built with Java and Swing, designed to manag
 
 | الاسم (Name) | المسؤولية (Responsibility) | المهام الأساسية (Key Tasks) |
 | --- | --- | --- |
-| **1. ABO Donia** | الأساسيات، تخزين البيانات والتصميم (Core Architecture, Storage & UI) | تشغيل النظام (`App`)، حفظ البيانات في الملفات (`FileManager`)، التحكم في شكل البرنامج (`UITheme`)، والـ `ValidationUtils`. |
+| **1. ABO Donia** | الأساسيات، تخزين البيانات والتصميم (Core Architecture, Storage & UI) | حفظ البيانات في الملفات (`FileManager`)، التحكم في شكل البرنامج (`UITheme`)، والـ `ValidationUtils`. |
 | **2. Abdelrahman Mohamed** | كلاسات المستخدمين ونظام تسجيل الدخول (User Models & Authentication) | بناء كلاسات المستخدمين (`User`, `Admin`, `Student`, `Instructor`)، والتأكد من صحة بيانات الدخول (`AuthService` و `LoginFrame`). |
-| **3. Ahmed Salman** | هيكلة الكورسات والمواد (Course Structure & Logic) | تصميم المواد الأساسية (`ParentCourse`) والكورسات الفعّالة (`Course`)، وعمل اللوجيك الخاص بيهم (`CourseService`). |
+| **3. Ahmed Salman** | نقطة البداية وهيكلة الكورسات والمواد (App Entry & Course Logic) | تشغيل النظام (`App`)، تصميم المواد الأساسية (`ParentCourse`) والكورسات الفعّالة (`Course`)، وعمل اللوجيك الخاص بيهم (`CourseService`). |
 | **4. Kareem Ayman** | لوحة تحكم الأدمن وإدارة الأشخاص (Admin Dashboard & Users CRUD) | تصميم لوحة تحكم الأدمن، وإضافة/حذف/تعديل الطلاب والدكاترة (`AdminService`, `ManageStudentsFrame`, `ManageInstructorsFrame`). |
 | **5. Nada Ibrahim** | البنية التحتية، الفروع، وإنشاء الكورسات (Infrastructure & Course Creation) | إدارة الفروع والقاعات (`Room`, `ManageBranchesFrame`, `ManageRoomsFrame`)، وربط الكورس بالفرع والقاعة المتاحة. |
 | **6. Youssef Mohamed** | شاشة الدكتور والدرجات والتقارير (Instructor Dashboard & Grading) | شاشة الدكتور وتعديل الدرجات، وعمل التقارير (`InstructorService`, `InstructorDashboard`, `Grade`, `ReportsFrame`). |
@@ -66,7 +66,7 @@ A comprehensive desktop application built with Java and Swing, designed to manag
 
 ```text
 📦 adv-pl (Project Root)
- ┣ 📜 App.java ........................................... 🧑‍💻 [ABO Donia]
+ ┣ 📜 App.java ........................................... 🧑‍💻 [Ahmed Salman]
  ┃
  ┣ 📂 models (Data Classes)
  ┃ ┣ 📜 Admin.java ....................................... 🧑‍💻 [Abdelrahman Mohamed]
