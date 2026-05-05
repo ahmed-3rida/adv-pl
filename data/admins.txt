@@ -1,0 +1,2 @@
+A001|Super Admin|admin@cms.com|123|ADMIN
+A002|Test Admin|test@cms.com|password123|ADMIN

@@ -1,0 +1,3 @@
+PC1|Java Programming|Learn core Java concepts and OOP.
+PC2|Advanced Java|Deep dive into threads, streams, and GUI.
+PC3|Database Systems|Introduction to SQL and database design.

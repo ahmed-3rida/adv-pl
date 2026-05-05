@@ -1,0 +1,10 @@
+# Compiled Java class files
+*.class
+bin/
+
+# VS Code settings
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db
