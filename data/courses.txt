@@ -4,4 +4,3 @@ C3|PC3|I1|LAB1|Helwan|300.0|2026-06-10|2025-08-10|Saturday|false|
 C4|PC3|I1|LAB1|Helwan|300.0|2026-06-10|2025-08-10|Saturday|false|
 C5|PC3|I1|LAB1|Helwan|300.0|2026-06-10|2027-08-10|Saturday|false|
 C6|PC3|I1|LAB1|Helwan|300.0|2026-06-11|2027-08-10|Saturday|false|
-C7|PC1|I2|LAB1|Helwan|300.0|2026-06-11|2027-08-10|Saturday|false|

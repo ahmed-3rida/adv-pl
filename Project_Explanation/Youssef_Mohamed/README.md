@@ -1,53 +1,35 @@
-# Project Explanation - GUI (Swing)
+# Project Explanation - Instructor Operations & Reporting
+
+## 📌 Assigned Files to Study
+1. `service/InstructorService.java` (Logic for instructor operations)
+2. `ui/InstructorDashboard.java` (Instructor's main view)
+3. `models/Grade.java` (Entity representing a student's score)
+4. `ui/ReportsFrame.java` (Admin/Instructor reports generation)
 
 ## 📌 What is this part of the system?
-This module handles everything the user sees and clicks on. It is the visual representation of the system using Java Swing.
+This part contains the primary tools for the teaching staff. It dictates what an instructor can do once they log into the system, mainly focusing on viewing their courses, grading students, and generating reports.
 
-## 📌 What does it do? (features)
-* Provides Login screens with role-based routing.
-* Provides Dashboards (menus) for Admin, Student, and Instructor.
-* Uses `JTable` to display lists of data (like Students, Courses, Grades).
-* Takes user input through text fields and drop-downs (`JComboBox`).
-* Shows popup messages for errors and success alerts.
-
-## 📌 Key classes used
-* `ui.LoginFrame`, `ui.AdminDashboard`, `ui.StudentDashboard`, `ui.InstructorDashboard`
-* `javax.swing.JFrame`, `JPanel`, `JTable`, `DefaultTableModel`, `JOptionPane`
-
-## 📌 Important concepts used
-* **Layout Managers**: `BorderLayout`, `GridLayout`, `FlowLayout` to arrange buttons and tables cleanly.
-* **Event Listeners**: `addActionListener(e -> {...})` to define what happens when a button is clicked.
-* **Table Models**: Using `DefaultTableModel` to easily add rows and make the table non-editable by the user directly.
+## 📌 What does it do? (Features)
+* `InstructorDashboard` lists the specific courses assigned to the logged-in instructor.
+* It allows the instructor to select a course, view enrolled students, and assign/update `Grade` records.
+* It allows instructors to "Publish" grades to make them visible to students.
+* The `ReportsFrame` is used to generate data views and statistics (e.g., passing rates, student performance) for academic evaluation.
 
 ## 📌 How it connects with other modules
-The UI is the "View" in MVC. It NEVER reads files directly. Instead, when a user clicks "Add Student", the UI collects text from the fields and calls `AdminService.addStudent()`. Depending on the boolean result, it shows a success or error popup.
-
-## 📌 Example from the code
-```java
-// Example of a button click listener using Lambda
-btnSave.addActionListener(e -> {
-    String name = tfName.getText().trim();
-    String email = tfEmail.getText().trim();
-    
-    // Call the Service logic
-    boolean success = AdminService.addStudent(name, email, ...);
-    
-    if (success) {
-        JOptionPane.showMessageDialog(this, "Student added.");
-        loadTable(); // Refresh the JTable
-    } else {
-        JOptionPane.showMessageDialog(this, "Email already exists.", "Error", JOptionPane.ERROR_MESSAGE);
-    }
-});
-```
+It takes over after the `LoginFrame` authenticates an Instructor. It interacts heavily with `FileManager` to read Courses and update Grades. The `Grade` data created here is later consumed by the Student module so students can see their results.
 
 ## 📌 Possible questions in discussion + answers
+**Q: Can an instructor add grades for any student?**
+A: No. Inside `InstructorDashboard` and `InstructorService`, the code filters the courses to show only those assigned to this instructor. Furthermore, grading checks ensure the student is actually enrolled in that specific course.
 
-**Q: Why use `DefaultTableModel` instead of just passing arrays to `JTable`?**
-A: `DefaultTableModel` makes it very easy to clear the table (`setRowCount(0)`) and dynamically add rows (`addRow(new Object[]{...})`) after loading data from the service. It also allows us to easily disable cell editing.
+**Q: What exactly does "Publishing" grades do?**
+A: It simply changes a boolean variable `isGradesPublished` from `false` to `true` inside the `Course` object. The student module checks this boolean before displaying the grade.
 
-**Q: How do you switch between screens?**
-A: When moving to a new screen, we create a new instance of the next frame and make it visible (`new AdminDashboard().setVisible(true)`), and we close the current frame using `dispose();` so memory isn't wasted.
-
-**Q: What is `SwingUtilities.invokeLater()` in App.java?**
-A: It ensures that the GUI is created on the Event Dispatch Thread (EDT), which is a rule in Java Swing to prevent freezing and thread-safety issues.
+---
+## 📝 ملخص بالعربي (Arabic Summary)
+**الجزء الخاص بـ Youssef Mohamed:**
+أنت مسؤول عن "شاشة الدكتور وإدارة الدرجات والتقارير".
+- فايل `InstructorDashboard.java` و `InstructorService.java`: دي الشاشة الرئيسية بتاعة الدكتور واللوجيك بتاعها، الدكتور بيدخل يلاقي الكورسات بتاعته بس (مش كورسات دكاترة تانية)، ويقدر يدخل على كل كورس ويشوف الطلاب ويحطلهم درجات.
+- فايل `Grade.java`: ده الكلاس اللي بيمثل درجة الطالب في المادة.
+- فايل `ReportsFrame.java`: دي شاشة بتعمل تقارير (Reports) عن أداء الطلاب ونسب النجاح، مفيدة جداً للإدارة والدكاترة.
+**باختصار:** انت مسؤول عن تجربة الدكتور على السيستم؛ إزاي بيشوف كورساته، إزاي بيحط أو يعدل درجات، وإزاي بيعمل Publish للدرجات عشان الطلاب تقدر تشوفها، بجانب شاشة التقارير.
