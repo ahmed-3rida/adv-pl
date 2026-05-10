@@ -5,16 +5,8 @@ import storage.FileManager;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
-/**
- * Admin operations: manage students and instructors.
- */
 public class AdminService {
-
-    // ------------------------------------------------------------------ //
-    //  Student CRUD
-    // ------------------------------------------------------------------ //
 
     public static List<Student> getAllStudents() throws IOException {
         return FileManager.loadStudents();
@@ -67,10 +59,6 @@ public class AdminService {
         }
         return removed;
     }
-
-    // ------------------------------------------------------------------ //
-    //  Instructor CRUD
-    // ------------------------------------------------------------------ //
 
     public static List<Instructor> getAllInstructors() throws IOException {
         return FileManager.loadInstructors();
@@ -125,10 +113,6 @@ public class AdminService {
         return removed;
     }
 
-    // ------------------------------------------------------------------ //
-    //  Room and Branch
-    // ------------------------------------------------------------------ //
-
     public static List<Room> getAllRooms() throws IOException {
         return FileManager.loadRooms();
     }
@@ -147,16 +131,13 @@ public class AdminService {
     public static boolean updateRoom(String oldRoomName, String oldBranchName, String newRoomName, String newBranchName) throws IOException {
         if (newRoomName == null || newRoomName.isBlank() || newBranchName == null || newBranchName.isBlank()) return false;
         List<Room> rooms = FileManager.loadRooms();
-        
-        // Check if the new room already exists (and it's not the same as the old one)
         for (Room r : rooms) {
-            if (r.getName().equalsIgnoreCase(newRoomName.trim()) && 
+            if (r.getName().equalsIgnoreCase(newRoomName.trim()) &&
                 r.getBranchName().equalsIgnoreCase(newBranchName.trim()) &&
                 !(r.getName().equalsIgnoreCase(oldRoomName) && r.getBranchName().equalsIgnoreCase(oldBranchName))) {
                 return false;
             }
         }
-        
         boolean updated = false;
         for (Room r : rooms) {
             if (r.getName().equalsIgnoreCase(oldRoomName) && r.getBranchName().equalsIgnoreCase(oldBranchName)) {
@@ -201,7 +182,6 @@ public class AdminService {
         boolean removed = branches.removeIf(b -> b.equalsIgnoreCase(branch));
         if (removed) {
             FileManager.saveBranches(branches);
-            // Cascade delete rooms
             List<Room> rooms = FileManager.loadRooms();
             boolean roomsRemoved = rooms.removeIf(r -> r.getBranchName().equalsIgnoreCase(branch));
             if (roomsRemoved) {

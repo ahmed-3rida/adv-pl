@@ -6,39 +6,20 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Central file I/O utility.
- * All data is stored in the /data directory relative to the working directory.
- * Each entity type has its own .txt file.
- *
- * Files:
- * data/admins.txt
- * data/students.txt
- * data/instructors.txt
- * data/parent_courses.txt
- * data/courses.txt
- * data/grades.txt
- * data/surveys.txt
- */
 public class FileManager {
 
     private static final String DATA_DIR = "data";
 
-    public static final String ADMINS_FILE = DATA_DIR + "/admins.txt";
-    public static final String STUDENTS_FILE = DATA_DIR + "/students.txt";
-    public static final String INSTRUCTORS_FILE = DATA_DIR + "/instructors.txt";
+    public static final String ADMINS_FILE        = DATA_DIR + "/admins.txt";
+    public static final String STUDENTS_FILE      = DATA_DIR + "/students.txt";
+    public static final String INSTRUCTORS_FILE   = DATA_DIR + "/instructors.txt";
     public static final String PARENT_COURSES_FILE = DATA_DIR + "/parent_courses.txt";
-    public static final String COURSES_FILE = DATA_DIR + "/courses.txt";
-    public static final String GRADES_FILE = DATA_DIR + "/grades.txt";
-    public static final String SURVEYS_FILE = DATA_DIR + "/surveys.txt";
-    public static final String ROOMS_FILE = DATA_DIR + "/rooms.txt";
-    public static final String BRANCHES_FILE = DATA_DIR + "/branches.txt";
+    public static final String COURSES_FILE       = DATA_DIR + "/courses.txt";
+    public static final String GRADES_FILE        = DATA_DIR + "/grades.txt";
+    public static final String SURVEYS_FILE       = DATA_DIR + "/surveys.txt";
+    public static final String ROOMS_FILE         = DATA_DIR + "/rooms.txt";
+    public static final String BRANCHES_FILE      = DATA_DIR + "/branches.txt";
 
-    // ------------------------------------------------------------------ //
-    // Generic read / write helpers
-    // ------------------------------------------------------------------ //
-
-    /** Ensure the data directory and file exist. */
     private static void ensure(String filePath) throws IOException {
         File dir = new File(DATA_DIR);
         if (!dir.exists())
@@ -48,7 +29,6 @@ public class FileManager {
             f.createNewFile();
     }
 
-    /** Read all non-blank, non-comment lines from a file. */
     public static List<String> readLines(String filePath) throws IOException {
         ensure(filePath);
         List<String> lines = new ArrayList<>();
@@ -64,7 +44,6 @@ public class FileManager {
         return lines;
     }
 
-    /** Overwrite the file with the given list of lines. */
     public static void writeLines(String filePath, List<String> lines) throws IOException {
         ensure(filePath);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, false))) {
@@ -75,7 +54,6 @@ public class FileManager {
         }
     }
 
-    /** Append a single line to a file. */
     public static void appendLine(String filePath, String line) throws IOException {
         ensure(filePath);
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(filePath, true))) {
@@ -83,10 +61,6 @@ public class FileManager {
             bw.newLine();
         }
     }
-
-    // ------------------------------------------------------------------ //
-    // Admin
-    // ------------------------------------------------------------------ //
 
     public static List<Admin> loadAdmins() throws IOException {
         List<Admin> list = new ArrayList<>();
@@ -106,10 +80,6 @@ public class FileManager {
         writeLines(ADMINS_FILE, lines);
     }
 
-    // ------------------------------------------------------------------ //
-    // Student
-    // ------------------------------------------------------------------ //
-
     public static List<Student> loadStudents() throws IOException {
         List<Student> list = new ArrayList<>();
         for (String line : readLines(STUDENTS_FILE)) {
@@ -127,10 +97,6 @@ public class FileManager {
             lines.add(s.toFileLine());
         writeLines(STUDENTS_FILE, lines);
     }
-
-    // ------------------------------------------------------------------ //
-    // Instructor
-    // ------------------------------------------------------------------ //
 
     public static List<Instructor> loadInstructors() throws IOException {
         List<Instructor> list = new ArrayList<>();
@@ -150,10 +116,6 @@ public class FileManager {
         writeLines(INSTRUCTORS_FILE, lines);
     }
 
-    // ------------------------------------------------------------------ //
-    // Parent Course
-    // ------------------------------------------------------------------ //
-
     public static List<ParentCourse> loadParentCourses() throws IOException {
         List<ParentCourse> list = new ArrayList<>();
         for (String line : readLines(PARENT_COURSES_FILE)) {
@@ -171,10 +133,6 @@ public class FileManager {
             lines.add(pc.toFileLine());
         writeLines(PARENT_COURSES_FILE, lines);
     }
-
-    // ------------------------------------------------------------------ //
-    // Course
-    // ------------------------------------------------------------------ //
 
     public static List<Course> loadCourses() throws IOException {
         List<Course> list = new ArrayList<>();
@@ -194,10 +152,6 @@ public class FileManager {
         writeLines(COURSES_FILE, lines);
     }
 
-    // ------------------------------------------------------------------ //
-    // Grade
-    // ------------------------------------------------------------------ //
-
     public static List<Grade> loadGrades() throws IOException {
         List<Grade> list = new ArrayList<>();
         for (String line : readLines(GRADES_FILE)) {
@@ -216,10 +170,6 @@ public class FileManager {
         writeLines(GRADES_FILE, lines);
     }
 
-    // ------------------------------------------------------------------ //
-    // Survey
-    // ------------------------------------------------------------------ //
-
     public static List<Survey> loadSurveys() throws IOException {
         List<Survey> list = new ArrayList<>();
         for (String line : readLines(SURVEYS_FILE)) {
@@ -237,10 +187,6 @@ public class FileManager {
             lines.add(s.toFileLine());
         writeLines(SURVEYS_FILE, lines);
     }
-
-    // ------------------------------------------------------------------ //
-    // Room and Branch
-    // ------------------------------------------------------------------ //
 
     public static List<Room> loadRooms() throws IOException {
         List<Room> list = new ArrayList<>();

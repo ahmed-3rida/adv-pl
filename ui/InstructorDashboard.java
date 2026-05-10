@@ -29,10 +29,8 @@ public class InstructorDashboard extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
         root.add(buildTopBar(), BorderLayout.NORTH);
 
-        // ── Tabbed content ────────────────────────────────────────────────────
         JTabbedPane tabs = new JTabbedPane();
         tabs.setBackground(UITheme.BG_DARK);
         tabs.setForeground(UITheme.TEXT_SECONDARY);
@@ -44,7 +42,6 @@ public class InstructorDashboard extends JFrame {
         root.add(tabs, BorderLayout.CENTER);
     }
 
-    // ── Top bar ───────────────────────────────────────────────────────────────
     private JPanel buildTopBar() {
         JPanel bar = new JPanel(new BorderLayout());
         bar.setBackground(UITheme.BG_CARD);
@@ -74,7 +71,6 @@ public class InstructorDashboard extends JFrame {
         return bar;
     }
 
-    // ── My Courses tab ────────────────────────────────────────────────────────
     private JPanel buildCoursesPanel() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setBackground(UITheme.BG_DARK);
@@ -106,7 +102,6 @@ public class InstructorDashboard extends JFrame {
         } catch (IOException ex) { showError(ex.getMessage()); }
     }
 
-    // ── Add/Update Grades tab ─────────────────────────────────────────────────
     private JPanel buildGradesPanel() {
         JPanel outer = new JPanel(new BorderLayout(0, 12));
         outer.setBackground(UITheme.BG_DARK);
@@ -115,7 +110,6 @@ public class InstructorDashboard extends JFrame {
         JLabel heading = UITheme.h2Label("Manage Student Grades");
         outer.add(heading, BorderLayout.NORTH);
 
-        // Form card
         JPanel card = UITheme.cardPanel(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
         gc.insets = new Insets(6, 8, 6, 8);
@@ -128,7 +122,6 @@ public class InstructorDashboard extends JFrame {
         JButton btnLoad = UITheme.secondaryButton("Load Grades");
         JButton btnSave = UITheme.primaryButton("Save Grade");
 
-        // Populate course combo from instructor's assigned courses
         List<Course> assignedCourses = new java.util.ArrayList<>();
         try {
             assignedCourses.addAll(InstructorService.getAssignedCourses(instructor.getId()));
@@ -144,7 +137,6 @@ public class InstructorDashboard extends JFrame {
         JTable gradeTable = new JTable(gradeModel);
         UITheme.styleTable(gradeTable);
 
-        // Refresh student combo when course changes
         Runnable refreshStudents = () -> {
             cbStudent.removeAllItems();
             int idx = cbCourse.getSelectedIndex();
@@ -155,14 +147,11 @@ public class InstructorDashboard extends JFrame {
         cbCourse.addActionListener(e -> refreshStudents.run());
         refreshStudents.run();
 
-        // Row 0: Course + Load
         gc.gridx = 0; gc.gridy = 0; gc.weightx = 0; card.add(UITheme.bodyLabel("Course:"), gc);
         gc.gridx = 1; gc.gridy = 0; gc.weightx = 1; card.add(cbCourse, gc);
         gc.gridx = 2; gc.gridy = 0; gc.weightx = 0; card.add(btnLoad, gc);
-        // Row 1: Student
         gc.gridx = 0; gc.gridy = 1; gc.weightx = 0; card.add(UITheme.bodyLabel("Student:"), gc);
         gc.gridx = 1; gc.gridy = 1; gc.weightx = 1; card.add(cbStudent, gc);
-        // Row 2: Grade + Save
         gc.gridx = 0; gc.gridy = 2; gc.weightx = 0; card.add(UITheme.bodyLabel("Grade (0-100):"), gc);
         gc.gridx = 1; gc.gridy = 2; gc.weightx = 1; card.add(tfGrade, gc);
         gc.gridx = 2; gc.gridy = 2; gc.weightx = 0; card.add(btnSave, gc);
@@ -217,7 +206,6 @@ public class InstructorDashboard extends JFrame {
         return outer;
     }
 
-    // ── Publish Grades tab ────────────────────────────────────────────────────
     private JPanel buildPublishPanel() {
         JPanel p = new JPanel(new BorderLayout(8, 12));
         p.setBackground(UITheme.BG_DARK);
@@ -270,7 +258,6 @@ public class InstructorDashboard extends JFrame {
         return p;
     }
 
-    // ── View Surveys tab ──────────────────────────────────────────────────────
     private JPanel buildSurveysPanel() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setBackground(UITheme.BG_DARK);

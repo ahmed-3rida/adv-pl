@@ -26,11 +26,9 @@ public class AdminDashboard extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Sidebar ───────────────────────────────────────────────────────────
         JPanel sidebar = buildSidebar();
         root.add(sidebar, BorderLayout.WEST);
 
-        // ── Content area (right side placeholder) ─────────────────────────────
         contentArea = new JPanel(new BorderLayout());
         contentArea.setBackground(UITheme.BG_DARK);
         contentArea.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
@@ -42,7 +40,6 @@ public class AdminDashboard extends JFrame {
         root.add(contentArea, BorderLayout.CENTER);
     }
 
-    // ── Sidebar builder ────────────────────────────────────────────────────────
     private JPanel buildSidebar() {
         JPanel sidebar = UITheme.sidebarPanel();
         sidebar.setLayout(new BorderLayout());
@@ -50,7 +47,6 @@ public class AdminDashboard extends JFrame {
         sidebar.setBorder(new MatteBorder(0, 0, 0, 1, UITheme.BORDER_COLOR));
         sidebar.setBackground(new Color(12, 20, 48));
 
-        // Header
         JPanel header = new JPanel();
         header.setLayout(new BoxLayout(header, BoxLayout.Y_AXIS));
         header.setBackground(new Color(12, 20, 48));
@@ -82,7 +78,6 @@ public class AdminDashboard extends JFrame {
         header.add(Box.createVerticalStrut(16));
         header.add(sep);
 
-        // Nav items
         JPanel nav = new JPanel();
         nav.setLayout(new BoxLayout(nav, BoxLayout.Y_AXIS));
         nav.setBackground(new Color(12, 20, 48));
@@ -108,7 +103,6 @@ public class AdminDashboard extends JFrame {
         navBtns[6].addActionListener(e -> { setVisible(false); new ReportsFrame(admin).setVisible(true); });
         navBtns[7].addActionListener(e -> new ViewSurveysFrame().setVisible(true));
 
-        // Footer logout
         JPanel footer = new JPanel(new BorderLayout());
         footer.setBackground(new Color(12, 20, 48));
         footer.setBorder(BorderFactory.createCompoundBorder(

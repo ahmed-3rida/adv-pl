@@ -22,12 +22,10 @@ public class LoginFrame extends JFrame {
         setResizable(false);
         UITheme.styleFrame(this);
 
-        // ── Full-window gradient background ──────────────────────────────────
         JPanel bg = UITheme.gradientPanel();
         bg.setLayout(new GridBagLayout());
         setContentPane(bg);
 
-        // ── Card ─────────────────────────────────────────────────────────────
         JPanel card = new JPanel();
         card.setLayout(new BoxLayout(card, BoxLayout.Y_AXIS));
         card.setBackground(UITheme.BG_CARD);
@@ -38,24 +36,20 @@ public class LoginFrame extends JFrame {
         card.setMaximumSize(new Dimension(380, 460));
         card.setPreferredSize(new Dimension(380, 460));
 
-        // Logo / Icon area
         JLabel icon = new JLabel("[ CMS ]", SwingConstants.CENTER);
         icon.setFont(new Font("Segoe UI", Font.BOLD, 28));
         icon.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Title
         JLabel title = new JLabel("Welcome Back", SwingConstants.CENTER);
         title.setFont(new Font("Segoe UI", Font.BOLD, 26));
         title.setForeground(UITheme.TEXT_PRIMARY);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // Subtitle
         JLabel subtitle = new JLabel("Sign in to your account", SwingConstants.CENTER);
         subtitle.setFont(UITheme.FONT_BODY);
         subtitle.setForeground(UITheme.TEXT_SECONDARY);
         subtitle.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // ── Form ─────────────────────────────────────────────────────────────
         JPanel form = new JPanel();
         form.setLayout(new BoxLayout(form, BoxLayout.Y_AXIS));
         form.setBackground(UITheme.BG_CARD);
@@ -83,19 +77,16 @@ public class LoginFrame extends JFrame {
         form.add(Box.createVerticalStrut(4));
         form.add(passwordField);
 
-        // ── Login button ─────────────────────────────────────────────────────
         JButton loginBtn = UITheme.primaryButton("Sign In");
         loginBtn.setMaximumSize(new Dimension(300, 42));
         loginBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
         loginBtn.addActionListener(e -> doLogin());
 
-        // ── System label ─────────────────────────────────────────────────────
         JLabel footer = new JLabel("Courses Management System v1.0", SwingConstants.CENTER);
         footer.setFont(UITheme.FONT_SMALL);
         footer.setForeground(UITheme.TEXT_MUTED);
         footer.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        // ── Assemble card ────────────────────────────────────────────────────
         card.add(icon);
         card.add(Box.createVerticalStrut(12));
         card.add(title);

@@ -33,7 +33,7 @@ public class ManageParentCoursesFrame extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
+
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(UITheme.BG_CARD);
         topBar.setBorder(BorderFactory.createCompoundBorder(
@@ -49,7 +49,7 @@ public class ManageParentCoursesFrame extends JFrame {
         topBar.add(btnBack,  BorderLayout.EAST);
         root.add(topBar, BorderLayout.NORTH);
 
-        // ── Table ─────────────────────────────────────────────────────────────
+
         String[] cols = {"ID", "Title", "Description"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -65,7 +65,7 @@ public class ManageParentCoursesFrame extends JFrame {
         center.add(UITheme.scrollPane(table), BorderLayout.CENTER);
         root.add(center, BorderLayout.CENTER);
 
-        // ── Form + Buttons ─────────────────────────────────────────────────────
+
         JPanel south = new JPanel(new BorderLayout(10, 10));
         south.setBackground(UITheme.BG_DARK);
         south.setBorder(BorderFactory.createEmptyBorder(6, 14, 14, 14));

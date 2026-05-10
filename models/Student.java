@@ -23,10 +23,6 @@ public class Student extends User {
                 + "|" + phone + "|" + address;
     }
 
-    /**
-     * Parse a Student from a pipe-delimited file line.
-     * Format: id|name|email|password|STUDENT|phone|address
-     */
     public static Student fromFileLine(String line) {
         String[] parts = line.split("\\|", -1);
         if (parts.length < 7) throw new IllegalArgumentException("Invalid Student line: " + line);

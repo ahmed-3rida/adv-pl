@@ -13,26 +13,20 @@ import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.List;
 
-/**
- * Manage Courses screen — dark themed, consistent with all other admin frames.
- */
 public class ManageCoursesFrame extends JFrame {
 
     private final Admin admin;
 
-    // Form combo boxes
     private JComboBox<String> cbParentCourse;
     private JComboBox<String> cbInstructor;
     private JComboBox<String> cbBranch;
     private JComboBox<String> cbRoom;
 
-    // Form text fields
     private final JTextField tfPrice     = UITheme.textField();
     private final JTextField tfStartDate = UITheme.textField();
     private final JTextField tfEndDate   = UITheme.textField();
     private final JTextField tfDays      = UITheme.textField();
 
-    // Table
     private final DefaultTableModel tableModel;
     private final JTable table;
 
@@ -45,7 +39,6 @@ public class ManageCoursesFrame extends JFrame {
         setLocationRelativeTo(null);
         UITheme.styleFrame(this);
 
-        // ── Combo boxes ──────────────────────────────────────────────────────
         cbParentCourse = UITheme.comboBox();
         cbInstructor   = UITheme.comboBox();
         cbBranch       = UITheme.comboBox();
@@ -54,7 +47,6 @@ public class ManageCoursesFrame extends JFrame {
         cbBranch.addActionListener(e -> updateRoomsForBranch());
         refreshCombos();
 
-        // Placeholder hints
         tfStartDate.setText("YYYY-MM-DD");
         tfEndDate.setText("YYYY-MM-DD");
         tfDays.setText("Mon,Wed,Fri");
@@ -63,7 +55,6 @@ public class ManageCoursesFrame extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(UITheme.BG_CARD);
         topBar.setBorder(BorderFactory.createCompoundBorder(
@@ -79,7 +70,6 @@ public class ManageCoursesFrame extends JFrame {
         topBar.add(btnBack,  BorderLayout.EAST);
         root.add(topBar, BorderLayout.NORTH);
 
-        // ── Table ─────────────────────────────────────────────────────────────
         String[] cols = {"ID", "Parent", "Instructor", "Room", "Branch", "Price",
                          "Start", "End", "Days", "Students", "Published"};
         tableModel = new DefaultTableModel(cols, 0) {
@@ -96,12 +86,10 @@ public class ManageCoursesFrame extends JFrame {
         center.add(UITheme.scrollPane(table), BorderLayout.CENTER);
         root.add(center, BorderLayout.CENTER);
 
-        // ── Form + Buttons ─────────────────────────────────────────────────────
         JPanel south = new JPanel(new BorderLayout(10, 10));
         south.setBackground(UITheme.BG_DARK);
         south.setBorder(BorderFactory.createEmptyBorder(6, 14, 14, 14));
 
-        // Two-column form inside a card
         JPanel formCard = UITheme.cardPanel(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
         gc.insets = new Insets(5, 8, 5, 8);
@@ -117,18 +105,15 @@ public class ManageCoursesFrame extends JFrame {
         tfEndDate.setPreferredSize(fieldSize);
         tfDays.setPreferredSize(fieldSize);
 
-        // Left column
         addFormRow2Col(formCard, gc, 0, 0, "Parent Course:", cbParentCourse);
         addFormRow2Col(formCard, gc, 1, 0, "Instructor:",    cbInstructor);
         addFormRow2Col(formCard, gc, 2, 0, "Branch:",        cbBranch);
         addFormRow2Col(formCard, gc, 3, 0, "Room:",          cbRoom);
-        // Right column
         addFormRow2Col(formCard, gc, 0, 2, "Price:",      tfPrice);
         addFormRow2Col(formCard, gc, 1, 2, "Start Date:", tfStartDate);
         addFormRow2Col(formCard, gc, 2, 2, "End Date:",   tfEndDate);
         addFormRow2Col(formCard, gc, 3, 2, "Days:",       tfDays);
 
-        // Buttons
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         btnPanel.setBackground(UITheme.BG_DARK);
 
@@ -157,7 +142,6 @@ public class ManageCoursesFrame extends JFrame {
         loadTable();
     }
 
-    // ── Helper: add a label+field in a 2-column grid ──────────────────────────
     private void addFormRow2Col(JPanel p, GridBagConstraints gc, int row, int colOffset,
                                  String label, JComponent field) {
         gc.gridx = colOffset;     gc.gridy = row; gc.weightx = 0;
@@ -166,7 +150,6 @@ public class ManageCoursesFrame extends JFrame {
         p.add(field, gc);
     }
 
-    // ── Data helpers ──────────────────────────────────────────────────────────
     private void refreshCombos() {
         cbParentCourse.removeAllItems();
         cbInstructor.removeAllItems();
@@ -232,7 +215,6 @@ public class ManageCoursesFrame extends JFrame {
         try { return LocalDate.parse(s); } catch (DateTimeParseException e) { return null; }
     }
 
-    // ── CRUD ──────────────────────────────────────────────────────────────────
     private void addCourse() {
         LocalDate start = parseDate(tfStartDate.getText().trim());
         LocalDate end   = parseDate(tfEndDate.getText().trim());

@@ -8,15 +8,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Course management: parent courses + scheduled course instances.
- * Also provides report generation.
- */
 public class CourseService {
-
-    // ------------------------------------------------------------------ //
-    //  Parent Course CRUD
-    // ------------------------------------------------------------------ //
 
     public static List<ParentCourse> getAllParentCourses() throws IOException {
         return FileManager.loadParentCourses();
@@ -59,10 +51,6 @@ public class CourseService {
         return removed;
     }
 
-    // ------------------------------------------------------------------ //
-    //  Course CRUD
-    // ------------------------------------------------------------------ //
-
     public static List<Course> getAllCourses() throws IOException {
         return FileManager.loadCourses();
     }
@@ -79,8 +67,6 @@ public class CourseService {
                                        LocalDate startDate, LocalDate endDate,
                                        String days) throws IOException {
         List<Course> courses = FileManager.loadCourses();
-
-        // Check for duplicates
         for (Course c : courses) {
             if (c.getParentCourseId().equals(parentCourseId) &&
                 c.getInstructorId().equals(instructorId) &&
@@ -93,7 +79,6 @@ public class CourseService {
                 return false;
             }
         }
-
         String id = "C" + (courses.size() + 1);
         Course course = new Course(id, parentCourseId, instructorId, room, branch,
                 price, startDate, endDate, days);
@@ -108,8 +93,6 @@ public class CourseService {
                                        double price, LocalDate startDate, LocalDate endDate,
                                        String days) throws IOException {
         List<Course> courses = FileManager.loadCourses();
-
-        // Check for duplicates
         for (Course c : courses) {
             if (!c.getId().equals(courseId) &&
                 c.getParentCourseId().equals(parentCourseId) &&
@@ -123,7 +106,6 @@ public class CourseService {
                 return false;
             }
         }
-
         for (Course c : courses) {
             if (c.getId().equals(courseId)) {
                 c.setParentCourseId(parentCourseId);
@@ -154,10 +136,6 @@ public class CourseService {
         }
         return removed;
     }
-
-    // ------------------------------------------------------------------ //
-    //  Enrol / Remove students
-    // ------------------------------------------------------------------ //
 
     public static boolean enrollStudent(String courseId, String studentId) throws IOException {
         List<Course> courses = FileManager.loadCourses();
@@ -191,13 +169,6 @@ public class CourseService {
         return false;
     }
 
-    // ------------------------------------------------------------------ //
-    //  Reports
-    // ------------------------------------------------------------------ //
-
-    /**
-     * Returns courses whose start date is within the next {@code days} days.
-     */
     public static List<Course> getCoursesNearToStart(int days) throws IOException {
         LocalDate today = LocalDate.now();
         LocalDate threshold = today.plusDays(days);
@@ -211,9 +182,6 @@ public class CourseService {
         return result;
     }
 
-    /**
-     * Returns courses whose end date is within the next {@code days} days.
-     */
     public static List<Course> getCoursesNearToEnd(int days) throws IOException {
         LocalDate today = LocalDate.now();
         LocalDate threshold = today.plusDays(days);
@@ -226,9 +194,7 @@ public class CourseService {
         }
         return result;
     }
-    /**
-     * Requirement 5: Allow Admins and Instructors to view all surveys.
-     */
+
     public static List<Survey> getAllSurveys() throws IOException {
         return FileManager.loadSurveys();
     }

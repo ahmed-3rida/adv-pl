@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
 
 public class StudentDashboard extends JFrame {
@@ -28,10 +27,8 @@ public class StudentDashboard extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
         root.add(buildTopBar(), BorderLayout.NORTH);
 
-        // ── Tabbed content ────────────────────────────────────────────────────
         JTabbedPane tabs = new JTabbedPane();
         tabs.setBackground(UITheme.BG_DARK);
         tabs.setForeground(UITheme.TEXT_SECONDARY);
@@ -44,11 +41,9 @@ public class StudentDashboard extends JFrame {
         root.add(tabs, BorderLayout.CENTER);
     }
 
-    // ── Top bar ───────────────────────────────────────────────────────────────
     private JPanel buildTopBar() {
         JPanel bar = new JPanel(new BorderLayout());
         bar.setBackground(UITheme.BG_CARD);
-        bar.setBorder(new MatteBorder(0, 0, 1, 0, UITheme.BORDER_COLOR));
         bar.setBorder(BorderFactory.createCompoundBorder(
             new MatteBorder(0, 0, 1, 0, UITheme.BORDER_COLOR),
             BorderFactory.createEmptyBorder(12, 20, 12, 20)
@@ -75,7 +70,6 @@ public class StudentDashboard extends JFrame {
         return bar;
     }
 
-    // ── All Courses tab ───────────────────────────────────────────────────────
     private JPanel buildAllCoursesPanel() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setBackground(UITheme.BG_DARK);
@@ -103,7 +97,6 @@ public class StudentDashboard extends JFrame {
         return p;
     }
 
-    // ── My Courses tab ────────────────────────────────────────────────────────
     private JPanel buildEnrolledCoursesPanel() {
         JPanel p = new JPanel(new BorderLayout(0, 10));
         p.setBackground(UITheme.BG_DARK);
@@ -130,7 +123,6 @@ public class StudentDashboard extends JFrame {
         return p;
     }
 
-    // ── Grades tab ────────────────────────────────────────────────────────────
     private JPanel buildGradesPanel() {
         JPanel p = new JPanel(new BorderLayout(8, 12));
         p.setBackground(UITheme.BG_DARK);
@@ -183,7 +175,6 @@ public class StudentDashboard extends JFrame {
         return p;
     }
 
-    // ── Survey tab ────────────────────────────────────────────────────────────
     private JPanel buildSurveyPanel() {
         JPanel p = new JPanel(new BorderLayout(8, 12));
         p.setBackground(UITheme.BG_DARK);
@@ -245,7 +236,6 @@ public class StudentDashboard extends JFrame {
         return p;
     }
 
-    // ── Update Info tab ───────────────────────────────────────────────────────
     private JPanel buildUpdateInfoPanel() {
         JPanel p = new JPanel(new BorderLayout(8, 12));
         p.setBackground(UITheme.BG_DARK);
@@ -308,7 +298,6 @@ public class StudentDashboard extends JFrame {
         return p;
     }
 
-    // ── Helpers ───────────────────────────────────────────────────────────────
     private void addFormRow(JPanel panel, GridBagConstraints gc, int row, String label, JComponent field) {
         gc.gridx = 0; gc.gridy = row; gc.weightx = 0;
         panel.add(UITheme.bodyLabel(label), gc);

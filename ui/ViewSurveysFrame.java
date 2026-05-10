@@ -26,7 +26,6 @@ public class ViewSurveysFrame extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(UITheme.BG_CARD);
         topBar.setBorder(BorderFactory.createCompoundBorder(
@@ -54,7 +53,6 @@ public class ViewSurveysFrame extends JFrame {
         topBar.add(rightBar, BorderLayout.EAST);
         root.add(topBar, BorderLayout.NORTH);
 
-        // ── Table ─────────────────────────────────────────────────────────────
         String[] cols = {"Course ID", "Student ID", "Rating", "Comment"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -68,7 +66,6 @@ public class ViewSurveysFrame extends JFrame {
         center.add(UITheme.scrollPane(table), BorderLayout.CENTER);
         root.add(center, BorderLayout.CENTER);
 
-        // ── Summary bar ───────────────────────────────────────────────────────
         JPanel statusBar = new JPanel(new BorderLayout());
         statusBar.setBackground(UITheme.BG_CARD);
         statusBar.setBorder(BorderFactory.createCompoundBorder(
@@ -81,7 +78,6 @@ public class ViewSurveysFrame extends JFrame {
         statusBar.add(countLbl, BorderLayout.WEST);
         root.add(statusBar, BorderLayout.SOUTH);
 
-        // Track row count for status
         tableModel.addTableModelListener(e -> countLbl.setText("Total surveys: " + tableModel.getRowCount()));
 
         loadData();

@@ -7,22 +7,13 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Student-facing operations:
- *  - View all courses
- *  - View grades for a specific course
- *  - Submit a survey
- *  - Update personal information
- */
 public class StudentService {
 
     public static List<Course> getAllCourses() throws IOException {
         return FileManager.loadCourses();
     }
 
-    /** Get published grades for a student in a given course. */
     public static Grade getGrade(String studentId, String courseId) throws IOException {
-        // Check if grades are published for the course
         Course course = CourseService.getCourseById(courseId);
         if (course == null) {
             System.out.println("[ERROR] Course not found: " + courseId);
@@ -41,10 +32,8 @@ public class StudentService {
         return null;
     }
 
-    /** Submit or update a survey. Returns: 0=failure, 1=new submission, 2=updated. */
     public static int submitSurvey(String studentId, String courseId,
                                    int rating, String comment) throws IOException {
-        // Validate student is enrolled
         Course course = CourseService.getCourseById(courseId);
         if (course == null) {
             System.out.println("[ERROR] Course not found: " + courseId);
@@ -58,7 +47,6 @@ public class StudentService {
             System.out.println("[ERROR] Rating must be between 1 and 5.");
             return 0;
         }
-        // Update existing survey if found, otherwise add new one
         List<Survey> surveys = FileManager.loadSurveys();
         boolean updated = false;
         for (Survey s : surveys) {
@@ -77,7 +65,6 @@ public class StudentService {
         return updated ? 2 : 1;
     }
 
-    /** Update student's own personal information. */
     public static boolean updatePersonalInfo(String studentId, String name, String email,
                                              String password, String phone,
                                              String address) throws IOException {
@@ -98,7 +85,6 @@ public class StudentService {
         return false;
     }
 
-    /** Return the courses a specific student is enrolled in. */
     public static List<Course> getEnrolledCourses(String studentId) throws IOException {
         List<Course> result = new ArrayList<>();
         for (Course c : FileManager.loadCourses()) {

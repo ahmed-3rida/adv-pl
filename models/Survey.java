@@ -1,15 +1,9 @@
 package models;
 
-/**
- * Represents a student survey submission for a course.
- *
- * File format (surveys.txt):
- *   courseId|studentId|rating|comment
- */
 public class Survey {
     private String courseId;
     private String studentId;
-    private int rating;       // 1-5
+    private int rating;
     private String comment;
 
     public Survey(String courseId, String studentId, int rating, String comment) {
@@ -28,7 +22,6 @@ public class Survey {
     public void setComment(String comment) { this.comment = comment; }
 
     public String toFileLine() {
-        // replace pipe in comment to avoid parsing issues
         return courseId + "|" + studentId + "|" + rating + "|" + comment.replace("|", ";");
     }
 

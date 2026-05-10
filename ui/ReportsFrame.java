@@ -30,7 +30,6 @@ public class ReportsFrame extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(UITheme.BG_CARD);
         topBar.setBorder(BorderFactory.createCompoundBorder(
@@ -44,9 +43,7 @@ public class ReportsFrame extends JFrame {
         btnBack.addActionListener(e -> { dispose(); new AdminDashboard(admin).setVisible(true); });
         topBar.add(titleLbl, BorderLayout.WEST);
         topBar.add(btnBack,  BorderLayout.EAST);
-        root.add(topBar, BorderLayout.NORTH);
 
-        // ── Controls ─────────────────────────────────────────────────────────
         JPanel controls = new JPanel(new FlowLayout(FlowLayout.LEFT, 14, 12));
         controls.setBackground(UITheme.BG_CARD);
         controls.setBorder(new MatteBorder(0, 0, 1, 0, UITheme.BORDER_COLOR));
@@ -71,16 +68,13 @@ public class ReportsFrame extends JFrame {
         controls.add(lbl); controls.add(tfDays);
         controls.add(Box.createHorizontalStrut(8));
         controls.add(btnStart); controls.add(btnEnd);
-        root.add(controls, BorderLayout.NORTH);
 
-        // Need compound north — wrap together
         JPanel north = new JPanel(new BorderLayout());
         north.setBackground(UITheme.BG_DARK);
         north.add(topBar,    BorderLayout.NORTH);
         north.add(controls,  BorderLayout.SOUTH);
         root.add(north, BorderLayout.NORTH);
 
-        // ── Table ─────────────────────────────────────────────────────────────
         String[] cols = {"ID", "Parent", "Instructor", "Room", "Branch", "Price", "Start", "End", "Days"};
         tableModel = new DefaultTableModel(cols, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }

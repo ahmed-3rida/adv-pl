@@ -5,13 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * A scheduled course instance.
- * Stores enrolled student IDs and grade references.
- *
- * File format (courses.txt):
- *   id|parentCourseId|instructorId|room|branch|price|startDate|endDate|days|gradesPublished|studentIds(comma-sep)
- */
 public class Course {
     private static final DateTimeFormatter FMT = DateTimeFormatter.ISO_LOCAL_DATE;
 
@@ -23,7 +16,7 @@ public class Course {
     private double price;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String days;           // e.g. "Mon,Wed,Fri"
+    private String days;
     private boolean gradesPublished;
     private List<String> studentIds;
 
@@ -43,7 +36,6 @@ public class Course {
         this.studentIds = new ArrayList<>();
     }
 
-    // Getters
     public String getId()              { return id; }
     public String getParentCourseId()  { return parentCourseId; }
     public String getInstructorId()    { return instructorId; }
@@ -56,7 +48,6 @@ public class Course {
     public boolean isGradesPublished() { return gradesPublished; }
     public List<String> getStudentIds(){ return studentIds; }
 
-    // Setters
     public void setParentCourseId(String parentCourseId) { this.parentCourseId = parentCourseId; }
     public void setInstructorId(String instructorId)     { this.instructorId = instructorId; }
     public void setRoom(String room)                     { this.room = room; }

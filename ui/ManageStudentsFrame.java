@@ -10,7 +10,6 @@ import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 public class ManageStudentsFrame extends JFrame {
 
@@ -38,7 +37,7 @@ public class ManageStudentsFrame extends JFrame {
         root.setBackground(UITheme.BG_DARK);
         setContentPane(root);
 
-        // ── Top bar ──────────────────────────────────────────────────────────
+
         JPanel topBar = new JPanel(new BorderLayout());
         topBar.setBackground(UITheme.BG_CARD);
         topBar.setBorder(BorderFactory.createCompoundBorder(
@@ -54,7 +53,7 @@ public class ManageStudentsFrame extends JFrame {
         topBar.add(btnBack,  BorderLayout.EAST);
         root.add(topBar, BorderLayout.NORTH);
 
-        // ── Table ─────────────────────────────────────────────────────────────
+
         String[] columns = {"ID", "Name", "Email", "Phone", "Address"};
         tableModel = new DefaultTableModel(columns, 0) {
             @Override public boolean isCellEditable(int r, int c) { return false; }
@@ -70,7 +69,7 @@ public class ManageStudentsFrame extends JFrame {
         center.add(UITheme.scrollPane(table), BorderLayout.CENTER);
         root.add(center, BorderLayout.CENTER);
 
-        // ── Form + Buttons (south) ─────────────────────────────────────────────
+
         JPanel south = new JPanel(new BorderLayout(10, 10));
         south.setBackground(UITheme.BG_DARK);
         south.setBorder(BorderFactory.createEmptyBorder(6, 14, 14, 14));
@@ -87,7 +86,7 @@ public class ManageStudentsFrame extends JFrame {
         addFormRow(formCard, gc, 3, "Phone:",    tfPhone);
         addFormRow(formCard, gc, 4, "Address:",  tfAddress);
 
-        // Buttons
+
         JPanel btnPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 10, 0));
         btnPanel.setBackground(UITheme.BG_DARK);
 
@@ -95,7 +94,7 @@ public class ManageStudentsFrame extends JFrame {
         JButton btnUpdate = UITheme.primaryButton("Update");
         JButton btnDelete = UITheme.primaryButton("Delete");
         JButton btnClear  = UITheme.secondaryButton("Clear");
-        // Tint Delete red via custom paint
+
         btnDelete.setForeground(UITheme.DANGER);
 
         btnAdd.addActionListener(e    -> addStudent());

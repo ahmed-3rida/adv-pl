@@ -24,10 +24,6 @@ public class Instructor extends User {
                 + "|" + specialization + "|" + phone;
     }
 
-    /**
-     * Parse an Instructor from a pipe-delimited file line.
-     * Format: id|name|email|password|INSTRUCTOR|specialization|phone
-     */
     public static Instructor fromFileLine(String line) {
         String[] parts = line.split("\\|", -1);
         if (parts.length < 7) throw new IllegalArgumentException("Invalid Instructor line: " + line);

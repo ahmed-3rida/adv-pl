@@ -5,31 +5,24 @@ import javax.swing.border.*;
 import javax.swing.table.*;
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.geom.RoundRectangle2D;
 
-/**
- * Central design system for the Courses Management System.
- * All colours, fonts and helper factories live here.
- */
 public class UITheme {
 
-    // ── Palette ──────────────────────────────────────────────────────────────
-    public static final Color BG_DARK        = new Color(15,  23,  42);   // #0f172a
-    public static final Color BG_CARD        = new Color(30,  41,  59);   // #1e293b
-    public static final Color BG_CARD2       = new Color(38,  52,  74);   // slightly lighter
-    public static final Color ACCENT         = new Color(99, 179, 237);   // sky-blue #63b3ed
-    public static final Color ACCENT_DARK    = new Color(49, 130, 206);   // #3182ce
-    public static final Color ACCENT_LIGHT   = new Color(144,205,244);    // hover tint
-    public static final Color SUCCESS        = new Color(72, 187,120);    // #48bb78
-    public static final Color DANGER         = new Color(252, 95, 95);    // #fc5f5f
-    public static final Color TEXT_PRIMARY   = new Color(226,232,240);    // #e2e8f0
-    public static final Color TEXT_SECONDARY = new Color(148,163,184);    // #94a3b8
-    public static final Color TEXT_MUTED     = new Color(100,116,139);    // #64748b
-    public static final Color BORDER_COLOR   = new Color(51, 65, 85);     // #334155
-    public static final Color TABLE_HEADER   = new Color(30, 64, 120);    // deep blue
-    public static final Color TABLE_ALT      = new Color(22, 32, 52);     // alternate row
+    public static final Color BG_DARK        = new Color(15,  23,  42);
+    public static final Color BG_CARD        = new Color(30,  41,  59);
+    public static final Color BG_CARD2       = new Color(38,  52,  74);
+    public static final Color ACCENT         = new Color(99, 179, 237);
+    public static final Color ACCENT_DARK    = new Color(49, 130, 206);
+    public static final Color ACCENT_LIGHT   = new Color(144,205,244);
+    public static final Color SUCCESS        = new Color(72, 187,120);
+    public static final Color DANGER         = new Color(252, 95, 95);
+    public static final Color TEXT_PRIMARY   = new Color(226,232,240);
+    public static final Color TEXT_SECONDARY = new Color(148,163,184);
+    public static final Color TEXT_MUTED     = new Color(100,116,139);
+    public static final Color BORDER_COLOR   = new Color(51, 65, 85);
+    public static final Color TABLE_HEADER   = new Color(30, 64, 120);
+    public static final Color TABLE_ALT      = new Color(22, 32, 52);
 
-    // ── Typography ───────────────────────────────────────────────────────────
     public static final Font FONT_TITLE  = new Font("Segoe UI", Font.BOLD,  22);
     public static final Font FONT_H2     = new Font("Segoe UI", Font.BOLD,  15);
     public static final Font FONT_BODY   = new Font("Segoe UI", Font.PLAIN, 13);
@@ -37,7 +30,6 @@ public class UITheme {
     public static final Font FONT_SMALL  = new Font("Segoe UI", Font.PLAIN, 11);
     public static final Font FONT_BTN    = new Font("Segoe UI", Font.BOLD,  12);
 
-    // ── Global L&F ───────────────────────────────────────────────────────────
     public static void applyGlobalDefaults() {
         UIManager.put("Panel.background",            BG_DARK);
         UIManager.put("OptionPane.background",       BG_CARD);
@@ -79,14 +71,10 @@ public class UITheme {
         UIManager.put("Table.selectionForeground",   Color.WHITE);
     }
 
-    // ── Factories ─────────────────────────────────────────────────────────────
-
-    /** Dark-themed JFrame base: sets icon-color, min-size, etc. */
     public static void styleFrame(JFrame frame) {
         frame.getContentPane().setBackground(BG_DARK);
     }
 
-    /** Styled card panel with rounded border feel */
     public static JPanel cardPanel(LayoutManager layout) {
         JPanel p = new JPanel(layout);
         p.setBackground(BG_CARD);
@@ -97,7 +85,6 @@ public class UITheme {
         return p;
     }
 
-    /** Title label */
     public static JLabel titleLabel(String text) {
         JLabel lbl = new JLabel(text, SwingConstants.CENTER);
         lbl.setFont(FONT_TITLE);
@@ -105,7 +92,6 @@ public class UITheme {
         return lbl;
     }
 
-    /** Section heading */
     public static JLabel h2Label(String text) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(FONT_H2);
@@ -113,7 +99,6 @@ public class UITheme {
         return lbl;
     }
 
-    /** Standard body label */
     public static JLabel bodyLabel(String text) {
         JLabel lbl = new JLabel(text);
         lbl.setFont(FONT_LABEL);
@@ -121,7 +106,6 @@ public class UITheme {
         return lbl;
     }
 
-    /** Styled text field */
     public static JTextField textField() {
         JTextField tf = new JTextField();
         styleTextField(tf);
@@ -159,7 +143,6 @@ public class UITheme {
         });
     }
 
-    /** Primary accent button */
     public static JButton primaryButton(String text) {
         JButton btn = new JButton(text) {
             @Override protected void paintComponent(Graphics g) {
@@ -185,16 +168,13 @@ public class UITheme {
         return btn;
     }
 
-    /** Danger/destructive button (red) */
     public static JButton dangerButton(String text) {
         JButton btn = primaryButton(text);
         btn.setForeground(Color.WHITE);
-        // override paint
         btn.putClientProperty("dangerBtn", true);
         return btn;
     }
 
-    /** Secondary (outline) button */
     public static JButton secondaryButton(String text) {
         JButton btn = new JButton(text);
         btn.setFont(FONT_BTN);
@@ -216,7 +196,6 @@ public class UITheme {
         return btn;
     }
 
-    /** Success (green) button */
     public static JButton successButton(String text) {
         JButton btn = new JButton(text) {
             @Override protected void paintComponent(Graphics g) {
@@ -242,7 +221,6 @@ public class UITheme {
         return btn;
     }
 
-    /** Style a JTable with dark theme */
     public static void styleTable(JTable table) {
         table.setBackground(BG_DARK);
         table.setForeground(TEXT_PRIMARY);
@@ -260,7 +238,6 @@ public class UITheme {
         header.setFont(FONT_LABEL);
         header.setBorder(BorderFactory.createEmptyBorder());
 
-        // Alternating rows
         table.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable t, Object val,
@@ -275,7 +252,6 @@ public class UITheme {
         });
     }
 
-    /** Styled scroll pane */
     public static JScrollPane scrollPane(Component view) {
         JScrollPane sp = new JScrollPane(view);
         sp.getViewport().setBackground(BG_DARK);
@@ -286,7 +262,6 @@ public class UITheme {
         return sp;
     }
 
-    /** Styled JComboBox */
     public static <T> JComboBox<T> comboBox() {
         JComboBox<T> cb = new JComboBox<>();
         cb.setBackground(BG_CARD2);
@@ -296,7 +271,6 @@ public class UITheme {
         return cb;
     }
 
-    /** Gradient background panel (for login) */
     public static JPanel gradientPanel() {
         return new JPanel() {
             @Override protected void paintComponent(Graphics g) {
@@ -313,7 +287,6 @@ public class UITheme {
         };
     }
 
-    /** Sidebar panel (for admin dashboard) */
     public static JPanel sidebarPanel() {
         JPanel p = new JPanel() {
             @Override protected void paintComponent(Graphics g) {
@@ -332,7 +305,6 @@ public class UITheme {
         return p;
     }
 
-    /** Sidebar navigation button */
     public static JButton navButton(String text, String emoji) {
         JButton btn = new JButton("  >  " + text) {
             boolean hovered = false;

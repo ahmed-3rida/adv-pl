@@ -12,10 +12,6 @@ public class Admin extends User {
         return getId() + "|" + getName() + "|" + getEmail() + "|" + getPassword() + "|" + getRole();
     }
 
-    /**
-     * Parse an Admin from a pipe-delimited file line.
-     * Format: id|name|email|password|ADMIN
-     */
     public static Admin fromFileLine(String line) {
         String[] parts = line.split("\\|", -1);
         if (parts.length < 5) throw new IllegalArgumentException("Invalid Admin line: " + line);

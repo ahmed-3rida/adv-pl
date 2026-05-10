@@ -7,15 +7,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Instructor-facing operations:
- *  - Add / update grades for enrolled students
- *  - Publish grades (makes them visible to students)
- *  - View their assigned courses
- */
 public class InstructorService {
 
-    /** Return all courses assigned to this instructor. */
     public static List<Course> getAssignedCourses(String instructorId) throws IOException {
         List<Course> result = new ArrayList<>();
         for (Course c : FileManager.loadCourses()) {
@@ -26,10 +19,6 @@ public class InstructorService {
         return result;
     }
 
-    /**
-     * Add or update a grade for a student in a course.
-     * Only allowed if the student is enrolled and grades are not yet published.
-     */
     public static boolean addOrUpdateGrade(String courseId, String studentId,
                                            double grade) throws IOException {
         Course course = CourseService.getCourseById(courseId);
@@ -69,10 +58,6 @@ public class InstructorService {
         return true;
     }
 
-    /**
-     * Publish all grades for a given course.
-     * Once published, grades become visible to students and cannot be modified.
-     */
     public static boolean publishGrades(String courseId, String instructorId) throws IOException {
         List<Course> courses = FileManager.loadCourses();
         for (Course c : courses) {
@@ -95,7 +80,6 @@ public class InstructorService {
         return false;
     }
 
-    /** View all grades entered for a specific course. */
     public static List<Grade> getGradesForCourse(String courseId) throws IOException {
         List<Grade> result = new ArrayList<>();
         for (Grade g : FileManager.loadGrades()) {

@@ -1,9 +1,5 @@
 package models;
 
-/**
- * Represents a parent course category (e.g., "Java Programming", "Web Development").
- * Actual scheduled courses reference a ParentCourse.
- */
 public class ParentCourse {
     private String id;
     private String title;
@@ -21,7 +17,6 @@ public class ParentCourse {
     public void setTitle(String title)             { this.title = title; }
     public void setDescription(String description) { this.description = description; }
 
-    /** Format: id|title|description */
     public String toFileLine() {
         return id + "|" + title + "|" + description;
     }

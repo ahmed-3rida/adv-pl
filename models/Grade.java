@@ -1,11 +1,5 @@
 package models;
 
-/**
- * Represents a grade entry for one student in one course.
- *
- * File format (grades.txt):
- *   courseId|studentId|grade
- */
 public class Grade {
     private String courseId;
     private String studentId;
