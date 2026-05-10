@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class ManageRoomsFrame extends JFrame {
 
-    private final Admin admin;
+
     private final DefaultTableModel tableModel;
     private final JTable table;
     private final JTextField tfRoomName = UITheme.textField();
@@ -20,7 +20,7 @@ public class ManageRoomsFrame extends JFrame {
 
     public ManageRoomsFrame(Admin admin) {
         super("Manage Rooms");
-        this.admin = admin;
+
         UITheme.applyGlobalDefaults();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(760, 540);
