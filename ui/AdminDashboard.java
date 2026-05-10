@@ -12,8 +12,6 @@ public class AdminDashboard extends JFrame {
     private final Admin admin;
     private final JPanel contentArea;
 
-    // Nav buttons for active-state tracking
-    private JButton lastActive;
 
     public AdminDashboard(Admin admin) {
         super("Admin Dashboard");

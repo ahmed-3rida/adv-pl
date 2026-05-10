@@ -144,9 +144,13 @@ public class StudentDashboard extends JFrame {
         gc.insets = new Insets(8, 8, 8, 8);
         gc.fill   = GridBagConstraints.HORIZONTAL;
 
-        JLabel lbl = UITheme.bodyLabel("Course ID:");
-        JTextField tfCourseId = UITheme.textField();
-        tfCourseId.setPreferredSize(new Dimension(180, 34));
+        JLabel lbl = UITheme.bodyLabel("Course:");
+        JComboBox<String> cbCourse = UITheme.comboBox();
+        cbCourse.setPreferredSize(new Dimension(240, 34));
+        try {
+            for (Course c : StudentService.getEnrolledCourses(student.getId()))
+                cbCourse.addItem(c.getId() + " — " + c.getParentCourseId());
+        } catch (IOException ex) { showError(ex.getMessage()); }
         JButton btnView = UITheme.primaryButton("View Grade");
 
         JLabel lblResult = new JLabel(" ", SwingConstants.CENTER);
@@ -154,8 +158,9 @@ public class StudentDashboard extends JFrame {
         lblResult.setForeground(UITheme.SUCCESS);
 
         btnView.addActionListener(e -> {
-            String cid = tfCourseId.getText().trim();
-            if (cid.isEmpty()) return;
+            if (cbCourse.getSelectedIndex() < 0) return;
+            String item = (String) cbCourse.getSelectedItem();
+            String cid  = item.split(" ")[0];
             try {
                 Grade g = StudentService.getGrade(student.getId(), cid);
                 if (g != null) {
@@ -169,7 +174,7 @@ public class StudentDashboard extends JFrame {
         });
 
         gc.gridx = 0; gc.gridy = 0; gc.weightx = 0; card.add(lbl, gc);
-        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1; card.add(tfCourseId, gc);
+        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1; card.add(cbCourse, gc);
         gc.gridx = 2; gc.gridy = 0; gc.weightx = 0; card.add(btnView, gc);
         gc.gridx = 0; gc.gridy = 1; gc.gridwidth = 3;
         card.add(lblResult, gc);
@@ -194,35 +199,44 @@ public class StudentDashboard extends JFrame {
         gc.anchor = GridBagConstraints.WEST;
         gc.fill   = GridBagConstraints.HORIZONTAL;
 
-        JTextField tfCourse  = UITheme.textField();
-        JTextField tfRating  = UITheme.textField();
-        tfRating.setText("1-5");
+        JComboBox<String> cbCourse = UITheme.comboBox();
+        try {
+            for (Course c : StudentService.getEnrolledCourses(student.getId()))
+                cbCourse.addItem(c.getId() + " — " + c.getParentCourseId());
+        } catch (IOException ex) { showError(ex.getMessage()); }
+
+        JComboBox<Integer> cbRating = UITheme.comboBox();
+        for (int i = 1; i <= 5; i++) cbRating.addItem(i);
+
         JTextField tfComment = UITheme.textField();
         JButton    btnSubmit = UITheme.successButton("Submit Survey");
 
         int row = 0;
-        addFormRow(card, gc, row++, "Course ID:", tfCourse);
-        addFormRow(card, gc, row++, "Rating (1-5):", tfRating);
-        addFormRow(card, gc, row++, "Comment:", tfComment);
+        addFormRow(card, gc, row++, "Course:",       cbCourse);
+        addFormRow(card, gc, row++, "Rating (1-5):", cbRating);
+        addFormRow(card, gc, row++, "Comment:",      tfComment);
 
         gc.gridx = 1; gc.gridy = row;
         card.add(btnSubmit, gc);
 
         btnSubmit.addActionListener(e -> {
-            String cid = tfCourse.getText().trim();
+            if (cbCourse.getSelectedIndex() < 0) return;
+            String item    = (String) cbCourse.getSelectedItem();
+            String cid     = item.split(" ")[0];
             String comment = tfComment.getText().trim();
-            int rating;
-            try { rating = Integer.parseInt(tfRating.getText().trim()); }
-            catch (NumberFormatException ex) {
-                JOptionPane.showMessageDialog(this, "Rating must be a number between 1 and 5."); return;
-            }
+            int    rating  = (Integer) cbRating.getSelectedItem();
             try {
-                boolean ok = StudentService.submitSurvey(student.getId(), cid, rating, comment);
-                if (ok) {
+                int result = StudentService.submitSurvey(student.getId(), cid, rating, comment);
+                if (result == 1) {
                     JOptionPane.showMessageDialog(this, "Survey submitted. Thank you!");
-                    tfCourse.setText(""); tfRating.setText("1-5"); tfComment.setText("");
+                    tfComment.setText("");
+                    cbRating.setSelectedIndex(0);
+                } else if (result == 2) {
+                    JOptionPane.showMessageDialog(this, "Survey updated successfully.");
+                    tfComment.setText("");
+                    cbRating.setSelectedIndex(0);
                 } else {
-                    JOptionPane.showMessageDialog(this, "Could not submit survey (check enrollment or duplication).");
+                    JOptionPane.showMessageDialog(this, "Could not submit survey (you may not be enrolled in this course).");
                 }
             } catch (IOException ex) { showError(ex.getMessage()); }
         });

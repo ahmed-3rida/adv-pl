@@ -8,18 +8,17 @@ import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.io.IOException;
-import java.util.List;
 
 public class ManageBranchesFrame extends JFrame {
 
-    private final Admin admin;
+
     private final DefaultTableModel tableModel;
     private final JTable table;
     private final JTextField tfBranchName = UITheme.textField();
 
     public ManageBranchesFrame(Admin admin) {
         super("Manage Branches");
-        this.admin = admin;
+
         UITheme.applyGlobalDefaults();
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         setSize(680, 500);

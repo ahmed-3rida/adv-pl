@@ -34,17 +34,4 @@ public class AuthService {
         return null;
     }
 
-    /**
-     * Seed a default admin if no admins exist yet.
-     * Credentials: admin@cms.com / admin123
-     */
-    public static void seedDefaultAdmin() throws IOException {
-        List<Admin> admins = FileManager.loadAdmins();
-        if (admins.isEmpty()) {
-            Admin defaultAdmin = new Admin("A001", "Super Admin", "admin@cms.com", "admin123");
-            admins.add(defaultAdmin);
-            FileManager.saveAdmins(admins);
-            System.out.println("[INFO] Default admin created: admin@cms.com / admin123");
-        }
-    }
 }

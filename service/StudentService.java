@@ -41,36 +41,40 @@ public class StudentService {
         return null;
     }
 
-    /** Submit a survey for a course (one survey per student per course). */
-    public static boolean submitSurvey(String studentId, String courseId,
-                                       int rating, String comment) throws IOException {
+    /** Submit or update a survey. Returns: 0=failure, 1=new submission, 2=updated. */
+    public static int submitSurvey(String studentId, String courseId,
+                                   int rating, String comment) throws IOException {
         // Validate student is enrolled
         Course course = CourseService.getCourseById(courseId);
         if (course == null) {
             System.out.println("[ERROR] Course not found: " + courseId);
-            return false;
+            return 0;
         }
         if (!course.getStudentIds().contains(studentId)) {
             System.out.println("[ERROR] You are not enrolled in course " + courseId);
-            return false;
-        }
-        // Check if already submitted
-        List<Survey> surveys = FileManager.loadSurveys();
-        for (Survey s : surveys) {
-            if (s.getCourseId().equals(courseId) && s.getStudentId().equals(studentId)) {
-                System.out.println("[WARN] You already submitted a survey for course " + courseId);
-                return false;
-            }
+            return 0;
         }
         if (rating < 1 || rating > 5) {
             System.out.println("[ERROR] Rating must be between 1 and 5.");
-            return false;
+            return 0;
         }
-        Survey survey = new Survey(courseId, studentId, rating, comment);
-        surveys.add(survey);
+        // Update existing survey if found, otherwise add new one
+        List<Survey> surveys = FileManager.loadSurveys();
+        boolean updated = false;
+        for (Survey s : surveys) {
+            if (s.getCourseId().equals(courseId) && s.getStudentId().equals(studentId)) {
+                s.setRating(rating);
+                s.setComment(comment);
+                updated = true;
+                break;
+            }
+        }
+        if (!updated) {
+            surveys.add(new Survey(courseId, studentId, rating, comment));
+        }
         FileManager.saveSurveys(surveys);
-        System.out.println("[OK] Survey submitted. Thank you!");
-        return true;
+        System.out.println(updated ? "[OK] Survey updated." : "[OK] Survey submitted. Thank you!");
+        return updated ? 2 : 1;
     }
 
     /** Update student's own personal information. */

@@ -7,8 +7,8 @@ import javax.swing.*;
 import javax.swing.border.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-import java.awt.event.*;
 import java.io.IOException;
+import java.util.List;
 
 public class InstructorDashboard extends JFrame {
 
@@ -122,11 +122,20 @@ public class InstructorDashboard extends JFrame {
         gc.anchor = GridBagConstraints.WEST;
         gc.fill   = GridBagConstraints.HORIZONTAL;
 
-        JTextField tfCourse  = UITheme.textField(); tfCourse.setPreferredSize(new Dimension(180, 32));
-        JTextField tfStudent = UITheme.textField(); tfStudent.setPreferredSize(new Dimension(180, 32));
-        JTextField tfGrade   = UITheme.textField(); tfGrade.setPreferredSize(new Dimension(180, 32));
-        JButton btnLoad      = UITheme.secondaryButton("Load Grades");
-        JButton btnSave      = UITheme.primaryButton("Save Grade");
+        JComboBox<String> cbCourse  = UITheme.comboBox(); cbCourse.setPreferredSize(new Dimension(220, 32));
+        JComboBox<String> cbStudent = UITheme.comboBox(); cbStudent.setPreferredSize(new Dimension(220, 32));
+        JTextField        tfGrade   = UITheme.textField(); tfGrade.setPreferredSize(new Dimension(180, 32));
+        JButton btnLoad = UITheme.secondaryButton("Load Grades");
+        JButton btnSave = UITheme.primaryButton("Save Grade");
+
+        // Populate course combo from instructor's assigned courses
+        List<Course> assignedCourses = new java.util.ArrayList<>();
+        try {
+            assignedCourses.addAll(InstructorService.getAssignedCourses(instructor.getId()));
+            for (Course c : assignedCourses)
+                cbCourse.addItem(c.getId() + " — " + c.getParentCourseId());
+        } catch (IOException ex) { showError(ex.getMessage()); }
+        final List<Course> courseRef = assignedCourses;
 
         String[] cols = {"Course ID", "Student ID", "Grade"};
         DefaultTableModel gradeModel = new DefaultTableModel(cols, 0) {
@@ -135,21 +144,33 @@ public class InstructorDashboard extends JFrame {
         JTable gradeTable = new JTable(gradeModel);
         UITheme.styleTable(gradeTable);
 
-        // Row 0: Course ID + Load
-        gc.gridx = 0; gc.gridy = 0; gc.weightx = 0; card.add(UITheme.bodyLabel("Course ID:"), gc);
-        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1; card.add(tfCourse, gc);
+        // Refresh student combo when course changes
+        Runnable refreshStudents = () -> {
+            cbStudent.removeAllItems();
+            int idx = cbCourse.getSelectedIndex();
+            if (idx < 0 || idx >= courseRef.size()) return;
+            for (String sid : courseRef.get(idx).getStudentIds())
+                cbStudent.addItem(sid);
+        };
+        cbCourse.addActionListener(e -> refreshStudents.run());
+        refreshStudents.run();
+
+        // Row 0: Course + Load
+        gc.gridx = 0; gc.gridy = 0; gc.weightx = 0; card.add(UITheme.bodyLabel("Course:"), gc);
+        gc.gridx = 1; gc.gridy = 0; gc.weightx = 1; card.add(cbCourse, gc);
         gc.gridx = 2; gc.gridy = 0; gc.weightx = 0; card.add(btnLoad, gc);
-        // Row 1: Student ID
-        gc.gridx = 0; gc.gridy = 1; gc.weightx = 0; card.add(UITheme.bodyLabel("Student ID:"), gc);
-        gc.gridx = 1; gc.gridy = 1; gc.weightx = 1; card.add(tfStudent, gc);
+        // Row 1: Student
+        gc.gridx = 0; gc.gridy = 1; gc.weightx = 0; card.add(UITheme.bodyLabel("Student:"), gc);
+        gc.gridx = 1; gc.gridy = 1; gc.weightx = 1; card.add(cbStudent, gc);
         // Row 2: Grade + Save
         gc.gridx = 0; gc.gridy = 2; gc.weightx = 0; card.add(UITheme.bodyLabel("Grade (0-100):"), gc);
         gc.gridx = 1; gc.gridy = 2; gc.weightx = 1; card.add(tfGrade, gc);
         gc.gridx = 2; gc.gridy = 2; gc.weightx = 0; card.add(btnSave, gc);
 
         btnLoad.addActionListener(e -> {
-            String cid = tfCourse.getText().trim();
-            if (cid.isEmpty()) return;
+            int idx = cbCourse.getSelectedIndex();
+            if (idx < 0) return;
+            String cid = cbCourse.getSelectedItem().toString().split(" ")[0];
             gradeModel.setRowCount(0);
             try {
                 for (Grade g : InstructorService.getGradesForCourse(cid))
@@ -160,14 +181,19 @@ public class InstructorDashboard extends JFrame {
         gradeTable.getSelectionModel().addListSelectionListener(e -> {
             int row = gradeTable.getSelectedRow();
             if (row < 0) return;
-            tfCourse.setText((String) gradeModel.getValueAt(row, 0));
-            tfStudent.setText((String) gradeModel.getValueAt(row, 1));
+            String sid = (String) gradeModel.getValueAt(row, 1);
+            for (int i = 0; i < cbStudent.getItemCount(); i++) {
+                if (cbStudent.getItemAt(i).equals(sid)) { cbStudent.setSelectedIndex(i); break; }
+            }
             tfGrade.setText(String.valueOf(gradeModel.getValueAt(row, 2)));
         });
 
         btnSave.addActionListener(e -> {
-            String cid = tfCourse.getText().trim();
-            String sid = tfStudent.getText().trim();
+            int ci = cbCourse.getSelectedIndex();
+            int si = cbStudent.getSelectedIndex();
+            if (ci < 0 || si < 0) return;
+            String cid = cbCourse.getSelectedItem().toString().split(" ")[0];
+            String sid = (String) cbStudent.getSelectedItem();
             double grade;
             try { grade = Double.parseDouble(tfGrade.getText().trim()); }
             catch (NumberFormatException ex) {
